@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+    <h1>{{ vehicle_data.name }}</h1>
+    <div>
+
+        <p>Model: {{ vehicle_data.model }}</p>
+        <p>Class: {{ vehicle_data.vehicle_class }}</p>
+        <p>Manufacturer: {{ vehicle_data.maufacturer }}</p>
+        <p>Cost: {{ vehicle_data.cost_in_credits }} Galactic Credits</p>
+        <p>Length: {{ vehicle_data.length }} Meters</p>
+        <p>Crew: {{ vehicle_data.crew }} People</p>
+        <p>Passengers: {{ vehicle_data.passengers }} People</p>
+        <p>Maximum Atmosphering Speed: {{ vehicle_data.max_atmosphering_speed }}</p>
+        <p>Cargo Capacity: {{ vehicle_data.cargo_capacity }} Kilograms</p>
+        <p>Consumables: The starship can go {{ vehicle_data.consumables }} without resupply</p>
+
+    </div>
+    <div>
+    <p><b><u>Pilots of {{ vehicle_data.name }}</u></b></p>
+    <ul>
+        {% if people_data[0] == "N/A" %}
+            <li>N/A</li>
+        {% else %}
+            {% for person in people_data %}
+                <li><a href="/categories/people/person?data={{ person.result.properties.url }}">{{ person.result.properties.name }}</a></p></li>
+            {% endfor %} 
+        {% endif %}
+    </ul>
+    </div>
+
+    <div>
+        <p><b><u>Films</u></b></p>
+        <ul>
+            {% if films_data[0] == "N/A" %}
+                <li>N/A</li>
+            {% else %}
+                {% for film in films_data %}
+                    <li><a href="/categories/films/film?data={{ film.result.properties.url }}">{{ film.result.properties.title }}</a></p></li>
+                {% endfor %} 
+            {% endif %}
+        </ul>
+    </div>
+    <div>
+        {% if isFavorite %} 
+            <h5 class="update-comments">Notes:</h5>
+            <form action="/users/favorite/{{ favId }}/update">
+                <textarea class="comments-input" name="comments">{{ favComments }}</textarea>
+                <input type="hidden" name="url" value="/categories/vehicles/vehicle?data={{ vehicle_data.url }}&updated=true">
+                <br>
+                <button class="btn btn-primary" type="submit">Add/Update Comment!</button>
+            </form>
+        {% endif %}
+    </div>
+
+    {% if user %}
+        {% if not isFavorite %}
+            <a href="/categories/vehicles/vehicle?data={{ vehicle_data.url }}&fav=add"><button class="btn btn-success">Add as Favorite</button></a>
+            <a href="/users/{{ user.id }}"><button class="btn btn-warning">See Favorites</button></a>
+        {% else %}
+        <a href="/users/{{ user.id }}"><button class="btn btn-warning">See Favorites</button></a>
+        <form action="/users/favorite/{{ favId }}/delete">
+            <input type="hidden" name="url" value="/categories/vehicles/vehicle?data={{ vehicle_data.url }}&deleted=true">
+            <button class="btn btn-danger" type="submit">Delete Favorite</button>
+        </form>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

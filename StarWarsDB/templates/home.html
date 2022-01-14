@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Welcome Back {{ user.username }}!</h1>
+<img src="{{ user.image_url }}" alt="Image for {{ user.username }}" id="profile-avatar">
+
+<div class="home-hero">
+    <br>
+    <h5>User Profile and Favorites?</h5>
+    <a href="/users/{{ user.id }}"><button class="btn btn-primary">Profile</button></a>
+    <a href="/logout" class="btn btn-danger">Logout</a>
+  </div><br>
+  <div>
+      <h5>Continue to Categories?</h5>
+      <a href="/categories" class="btn btn-warning">Categories</a>
+  </div>
+{% endblock %}

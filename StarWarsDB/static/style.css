@@ -1,0 +1,133 @@
+body {
+	background: #000 url(//cssanimation.rocks/demo/starwars/images/bg.jpg);
+	color: white;
+}
+
+button {
+	margin: 5px 5px 5px 0px;
+}
+
+label {
+	color: black;
+}
+
+a:link {
+	color: rgb(255, 254, 250);
+}
+
+a:hover {
+	color: gold;
+	cursor: pointer;
+}
+
+a:active {
+	color: blue;
+}
+
+/*a:visited {
+	color: rgb(156, 237, 248);
+}*/
+
+.btn {
+	padding: 10px;
+}
+
+.btn-category {
+	font: bold 20px Arial;
+	text-decoration: none;
+	background-color: rgba(255, 217, 0, 0.637);
+	color: black;
+	padding: 15px 45px 15px 45px;
+	border-top: 4px solid #cccccc;
+	border-right: 4px solid #333333;
+	border-bottom: 10px solid #333333;
+	border-left: 10px solid #cccccc;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+	/*overflow: hidden;*/
+	background-color: rgba(255, 217, 0, 0.637);
+}
+
+.brand {
+	color: black;
+	text-align: center;
+	padding: 10px 4px;
+}
+
+.brand:hover {
+	background-color: white;
+}
+
+.topnav li a {
+	color: black;
+	text-align: center;
+	padding: 12px 14px;
+	text-decoration: none;
+	font-size: 17px;
+}
+
+.topnav li a:hover {
+	color: black;
+	background-color: white;
+}
+
+.active {
+	font: 40px;
+}
+
+/* Style the subnav content - positioned absolute */
+.subnav-content {
+	background-color: lightgray;
+}
+
+.cat-sel {
+	margin: 0px 10px 0px 0px;
+}
+
+.cat-search {
+	margin: 0px 10px 0px 0px;
+}
+
+.search-btn {
+	margin: 0px 20px 0px 0px;
+	background-color: lightgray;
+	color: black;
+}
+
+.search-btn:hover {
+	background-color: black;
+	color: white;
+}
+
+.update-comments {
+	color: white;
+}
+
+.comments-input {
+	width: 50%;
+	height: 150px;
+}
+
+#profile-avatar {
+	width: 200px;
+	height: 200px;
+	border: 5px solid #fff;
+	margin-top: 20px;
+	z-index: 1;
+	position: relative;
+	box-shadow: 0 1px 1px rgba(136, 153, 166, 0.15);
+}
+
+.icon-color {
+	color: black;
+}

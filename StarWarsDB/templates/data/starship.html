@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+    <h1>{{ starship_data.name }}</h1>
+    <div>
+
+        <p>Model: {{ starship_data.model }}</p>
+        <p>Class: {{ starship_data.starship_class }}</p>
+        <p>Manufacturer: {{ starship_data.maufacturer }}</p>
+        <p>Cost: {{ starship_data.cost_in_credits }} Galactic Credits</p>
+        <p>Length: {{ starship_data.length }} Meters</p>
+        <p>Crew: {{ starship_data.crew }} People</p>
+        <p>Passengers: {{ starship_data.passengers }} People</p>
+        <p>Maximum Atmosphering Speed: {{ starship_data.max_atmosphering_speed }}</p>
+        <p>Hyperdrive Rating: {{ starship_data.hyperdrive_rating }}</p>
+        <p>MGLT: Maximum of {{ starship_data.MGLT }} Megalights traveled in 1 hour</p>
+        <p>Cargo Capacity: {{ starship_data.cargo_capacity }} Kilograms</p>
+        <p>Consumables: The starship can go {{ starship_data.consumables }} without resupply</p>
+
+    </div>
+    <div>
+    <p><b><u>Pilots of {{ starship_data.name }}</u></b></p>
+    <ul>
+        {% if people_data[0] == "N/A" %}
+            <li>N/A</li>
+        {% else %}
+            {% for person in people_data %}
+                <li><a href="/categories/people/person?data={{ person.result.properties.url }}">{{ person.result.properties.name }}</a></p></li>
+            {% endfor %} 
+        {% endif %}
+    </ul>
+    </div>
+    <div>
+        {% if isFavorite %} 
+            <h5 class="update-comments">Notes:</h5>
+            <form action="/users/favorite/{{ favId }}/update">
+                <textarea class="comments-input" name="comments">{{ favComments }}</textarea>
+                <input type="hidden" name="url" value="/categories/starships/starship?data={{ starship_data.url }}&updated=true">
+                <br>
+                <button class="btn btn-primary" type="submit">Add/Update Comment!</button>
+            </form>
+        {% endif %}
+
+        {% if user %}
+            {% if not isFavorite %}
+                <a href="/categories/starships/starship?data={{ starship_data.url }}&fav=add"><button class="btn btn-success">Add as Favorite</button></a>
+                <a href="/users/{{ user.id }}"><button class="btn btn-warning">See Favorites</button></a>
+            {% else %}
+                <a href="/users/{{ user.id }}"><button class="btn btn-warning">See Favorites</button></a>
+                <form action="/users/favorite/{{ favId }}/delete">
+                    <input type="hidden" name="url" value="/categories/starships/starship?data={{ starship_data.url }}&deleted=true">
+                    <button class="btn btn-danger" type="submit">Delete Favorite</button>
+                </form>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+    <h1>{{ specie_data.name }}</h1>
+    <div>
+        <p>Classification: {{ specie_data.classification }}</p>
+        <p>Designation: {{ specie_data.designation }}</p>
+        <p>Language: {{ specie_data.language }}</p>
+        <p>Average Height: {{ specie_data.average_height }} cm</p>
+        <p>Average Lifespan: {{ specie_data.average_lifespan }} years</p>
+        <p>Hair Colors: {{ specie_data.hair_colors }}</p>
+        <p>Skin Colors: {{ specie_data.skin_colors }}</p>
+        <p>Eye Colors: {{ specie_data.eye_colors }}</p>
+
+        {% if planet_data.result.properties.url %}
+            <p><b>Home Planet:</b> <a href="/categories/planets/planet?data={{ planet_data.result.properties.url }}">{{ planet_data.result.properties.name }}</a></p>
+        {% endif %}
+    </div>
+    <div>
+    <p><b><u>Characters of this Species</u></b></p>
+    <ul>
+        {% for person in people_data %}
+            <li><a href="/categories/people/person?data={{ person.result.properties.url }}">{{ person.result.properties.name }}</a></p></li>
+        {% endfor %} 
+    </ul>
+    {% if isFavorite %} 
+      <h5 class="update-comments">Notes:</h5>
+      <form action="/users/favorite/{{ favId }}/update">
+        <textarea class="comments-input" name="comments">{{ favComments }}</textarea>
+        <input type="hidden" name="url" value="/categories/species/specie?data={{ specie_data.url }}&updated=true">
+        <br>
+        <button class="btn btn-primary" type="submit">Add/Update Comment!</button>
+      </form>
+    {% endif %}
+    </div>
+
+    {% if user %}
+    {% if not isFavorite %}
+        <a href="/categories/species/specie?data={{ specie_data.url }}&fav=add"><button class="btn btn-success">Add as Favorite</button></a>
+        <a href="/users/{{ user.id }}"><button class="btn btn-warning">See Favorites</button></a>
+    {% else %}
+    <a href="/users/{{ user.id }}"><button class="btn btn-warning">See Favorites</button></a>
+    <form action="/users/favorite/{{ favId }}/delete">
+      <input type="hidden" name="url" value="/categories/species/specie?data={{ specie_data.url }}&deleted=true">
+      <button class="btn btn-danger" type="submit">Delete Favorite</button>
+    </form>
+    {% endif %}
+  {% endif %}
+</div>
+{% endblock %}
+

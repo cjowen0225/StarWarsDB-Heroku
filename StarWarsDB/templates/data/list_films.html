@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+  <div>
+    <h2>Films</h2>
+  </div>
+  {% for item in films_data %}
+    <div><a href="/categories/films/film?data={{ item.properties.url }}">Episode {{ item.properties.episode_id }}: {{ item.properties.title }}</a></div>
+  {% endfor %}
+{% endblock %}
+

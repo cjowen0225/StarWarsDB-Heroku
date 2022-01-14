@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Star Wars DB</title>
+
+  <link rel="stylesheet"
+        href="https://unpkg.com/bootstrap/dist/css/bootstrap.css">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+  
+  <link rel="stylesheet"
+        href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light topnav sticky-top">
+    <a class="navbar-brand brand" href="/">Star Wars DB</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse d-flex-lg justify-content-between" id="navbarSupportedContent">
+        <div class="d-flex">
+          <ul class="navbar-nav mr-auto">
+            {% if not g.user %}
+            <li class="nav-item">
+              <a class="nav-link" href="/signup">Sign up</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="/users/{{ g.user.id }}">{{ g.user.username }}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Log out</a>
+            </li>
+            {% endif %}
+            <li class="nav-item dropdown subnav">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Categories
+              </a>
+              <div class="dropdown-menu subnav-content" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/categories/people">People</a>
+                <!-- <a class="dropdown-item" href="/categories/films">Films</a> -->
+                <a class="dropdown-item" href="/categories/planets">Planets</a>
+                <a class="dropdown-item" href="/categories/species">Species</a>
+                <a class="dropdown-item" href="/categories/starships">Starships</a>
+                <a class="dropdown-item" href="/categories/vehicles">Vehicles</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="d-flex">
+          <form action="/search" class="d-flex search-form form-inline">
+            <select name="cat" class="form-control cat-sel">
+              <option value="people">People</option>
+              <!-- <option value="films">Films</option> -->
+              <option value="species">Species</option>
+              <option value="planets">Planets</option>
+              <option value="vehicles">Vehicles</option>
+              <option value="starships">Starships</option>
+            </select>
+            <input class="form-control mr-sm-2 cat-search" type="search" name="search" placeholder="Search.." aria-label="Search">
+            <button class="btn search-btn my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      
+    </div>
+  </nav>
+    <div class="container">
+      {% for category, message in get_flashed_messages(with_categories=True) %}
+      <div class="alert alert-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    
+      <br>
+      {% block content %}
+      {% endblock %}
+    
+    </div>
+    </body>
+    </html>

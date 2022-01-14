@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+  <div>
+    <h2>Species</h2>
+  </div>
+  {% if species_data %}
+    {% for item in species_data %}
+      <div><a href="/categories/species/specie?data={{ item.url }}">{{ item['name'] }}</a></div>
+    {% endfor %}
+  {% else %} 
+    {% for item in search_data %}
+      <div><a href="/categories/species/specie?data={{ item.properties.url }}">{{ item.properties.name }}</a></div>
+    {% endfor %}
+  {% endif %}
+
+{% endblock %}

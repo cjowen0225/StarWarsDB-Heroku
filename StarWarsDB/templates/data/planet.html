@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+  <div><h1>{{ planet_data.name }}</h1></div>
+  <div>
+    <p><b>Diameter:</b> {{ planet_data.diameter }} km</p>
+    <p><b>Rotational Period:</b> It takes {{ planet_data.rotation_period }} hours to complete 1 rotation on its axis.</p>
+    <p><b>Orbital Period:</b> It takes {{ planet_data.orbital_period }} days to complete 1 orbit of its local star.</p>
+    <p><b>Gravity:</b> {{ planet_data.gravity }} G</p>
+    <p><b>Population:</b> {{ planet_data.population }} Occupants</p>
+    <p><b>Climate:</b> {{ planet_data.climate }}</p>
+    <p><b>Terrain:</b> {{ planet_data.terrain }}</p>
+    <p><b>Surface Water:</b> {{ planet_data.surface_water }} percent of this planet is covered by water.</p>
+    {% if isFavorite %} 
+      <h5 class="update-comments">Notes:</h5>
+      <form action="/users/favorite/{{ favId }}/update">
+        <textarea class="comments-input" name="comments">{{ favComments }}</textarea>
+        <input type="hidden" name="url" value="/categories/planets/planet?data={{ planet_data.url }}&updated=true">
+        <br>
+        <button class="btn btn-primary" type="submit">Add/Update Comment!</button>
+      </form>
+    {% endif %}
+  </div>
+
+  {% if user %}
+    {% if not isFavorite %}
+        <a href="/categories/planets/planet?data={{ planet_data.url }}&fav=add"><button class="btn btn-success">Add as Favorite</button></a>
+        <a href="/users/{{ user.id }}"><button class="btn btn-warning">See Favorites</button></a>
+    {% else %}
+    <a href="/users/{{ user.id }}"><button class="btn btn-warning">See Favorites</button></a>
+    <form action="/users/favorite/{{ favId }}/delete">
+      <input type="hidden" name="url" value="/categories/planets/planet?data={{ planet_data.url }}&deleted=true">
+      <button class="btn btn-danger" type="submit">Delete Favorite</button>
+    </form>
+    {% endif %}
+  {% endif %}
+</div>
+{% endblock %}

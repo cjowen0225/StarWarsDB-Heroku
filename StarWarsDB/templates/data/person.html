@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+  <div><h1>{{ person_data.name }}</h1></div>
+  <div>
+    <h5><u>Personal Information</u></h5>
+    <p><b>Birth Year:</b> {{ person_data.birth_year }}</p>
+    <p><b>Gender:</b> {{ person_data.gender }}</p>
+    <p><b>Height:</b> {{ person_data.height }} cm</p>
+    <p><b>Mass:</b> {{ person_data.mass }} kg</p>
+    <p><b>Skin Color:</b> {{ person_data.skin_color}}</p>
+    <p><b>Eye Color:</b> {{ person_data.eye_color }}</p>
+    <p><b>Hair Color:</b> {{ person_data.hair_color }}</p>
+    {% if planet_data.result.properties.url %}
+        <p><b>Home Planet:</b> <a href="/categories/planets/planet?data={{ planet_data.result.properties.url }}">{{ planet_data.result.properties.name }}</a></p>
+    {% endif %}
+    {% if isFavorite %} 
+      <h5 class="update-comments">Notes:</h5>
+      <form action="/users/favorite/{{ favId }}/update">
+        <textarea class="comments-input" name="comments">{{ favComments }}</textarea>
+        <input type="hidden" name="url" value="/categories/people/person?data={{ person_data.url }}&updated=true">
+        <br>
+        <button class="btn btn-primary" type="submit">Add/Update Comment!</button>
+      </form>
+    {% endif %}
+  </div>
+  {% if user %}
+    {% if not isFavorite %}
+        <a href="/categories/people/person?data={{ person_data.url }}&fav=add"><button class="btn btn-success">Add as Favorite</button></a>
+        <a href="/users/{{ user.id }}"><button class="btn btn-warning">See Favorites</button></a>
+    {% else %}
+    <a href="/users/{{ user.id }}"><button class="btn btn-warning">See Favorites</button></a>
+    <form action="/users/favorite/{{ favId }}/delete">
+      <input type="hidden" name="url" value="/categories/people/person?data={{ person_data.url }}&deleted=true">
+      <button class="btn btn-danger" type="submit">Delete Favorite</button>
+    </form>
+    {% endif %}
+  {% endif %}
+</div>
+{% endblock %}
